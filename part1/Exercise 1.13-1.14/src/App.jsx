@@ -13,7 +13,7 @@ const App = () => {
 	];
 
 	const [selected, setSelected] = useState(0);
-	const [votes, setVotes] = useState(new Uint8Array(anecdotes.length));
+	const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
 
 	const mostVoted = Math.max(...votes);
 	const mostVotedIndex = votes.indexOf(mostVoted);
