@@ -6,10 +6,14 @@ const Countries = ({ countries, handleClick }) => {
 					{countries.map((country) => (
 						<div key={country.area}>
 							{country.name.common}
-							<button key={country.population} onClick={() => handleClick(country.name.common)}>Show</button>
+							<button
+								key={country.population}
+								onClick={() => handleClick(country.name.common)}
+							>
+								Show
+							</button>
 						</div>
 					))}
-
 				</div>
 			) : (
 				<span>Too many matches, specify another filter</span>

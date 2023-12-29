@@ -11,9 +11,7 @@ const App = () => {
 	const [selectedCountry, setSelectedCountry] = useState(null);
 
 	useEffect(() => {
-		countryService
-			.getAll()
-			.then((initialCountries) => setCountries(initialCountries));
+		countryService.getAll().then((initialCountries) => setCountries(initialCountries));
 	}, []);
 
 	const filteredCountries = value
@@ -28,9 +26,7 @@ const App = () => {
 	};
 
 	const handleClick = (country) => {
-		countryService
-			.getCountry(country)
-			.then((response) => setSelectedCountry(response));
+		countryService.getCountry(country).then((response) => setSelectedCountry(response));
 	};
 
 	if (!countries) return null;
@@ -41,10 +37,7 @@ const App = () => {
 			{selectedCountry || filteredCountries.length === 1 ? (
 				<Country country={selectedCountry || filteredCountries[0]} />
 			) : (
-				<Countries
-					handleClick={handleClick}
-					countries={filteredCountries}
-				/>
+				<Countries handleClick={handleClick} countries={filteredCountries} />
 			)}
 		</main>
 	);
