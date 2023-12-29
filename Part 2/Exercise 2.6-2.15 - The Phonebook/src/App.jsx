@@ -1,0 +1,109 @@
+import { useEffect, useState } from "react";
+import personsService from "./services/persons";
+
+import Filter from "./components/Filter";
+import PersonForm from "./components/PersonForm";
+import Persons from "./components/Persons";
+
+const App = () => {
+	const [persons, setPersons] = useState([]);
+	const [newName, setNewName] = useState("");
+	const [newNumber, setNewNumber] = useState("");
+	const [search, setSearch] = useState("");
+
+	useEffect(() => {
+		personsService
+			.getAll()
+			.then((initialPersons) => setPersons(initialPersons));
+	}, []);
+
+	const handleNameChange = (event) => setNewName(event.target.value);
+
+	const handleNumberChange = (event) => setNewNumber(event.target.value);
+
+	const handleSearchInputChange = (event) => setSearch(event.target.value);
+
+	const findPersonByName = (name) =>
+		persons.find(
+			(person) => person.name.toLowerCase() === name.toLowerCase()
+		);
+
+	const handleFormSubmit = async (event) => {
+		event.preventDefault();
+
+		const existingPerson = findPersonByName(newName);
+
+		setNewName("");
+		setNewNumber("");
+
+		if (existingPerson) {
+			const confirmUpdate = window.confirm(
+				`${existingPerson.name} is already added to the phonebook, replace the old number with a new one?`
+			);
+
+			if (!confirmUpdate) return;
+
+			const updatedPerson = { ...existingPerson, number: newNumber };
+
+			const returnedPerson = await personsService.update(
+				updatedPerson.id,
+				updatedPerson
+			);
+
+			setPersons(
+				persons.map((person) =>
+					person.id === returnedPerson.id ? returnedPerson : person
+				)
+			);
+		} else {
+			const newPerson = {
+				name: newName,
+				number: newNumber,
+			};
+
+			const returnedPerson = await personsService.create(newPerson);
+			setPersons(persons.concat(returnedPerson));
+		}
+	};
+
+	const handleDeletePerson = ({ id, name }) => {
+		if (window.confirm(`Are you sure you want to delete ${name}?`)) {
+			personsService
+				.deleteP(id)
+				.then(() =>
+					setPersons(persons.filter((person) => person.id !== id))
+				);
+		}
+	};
+
+	const personsToShow = search
+		? persons.filter((person) =>
+				person.name.toLowerCase().includes(search.toLowerCase())
+		  )
+		: persons;
+
+	return (
+		<div>
+			<h2>Phonebook</h2>
+			<Filter
+				search={search}
+				onSearchInputChange={handleSearchInputChange}
+			/>
+			<h2>Add a new</h2>
+			<PersonForm
+				name={newName}
+				number={newNumber}
+				onNumberChange={handleNumberChange}
+				onNameChange={handleNameChange}
+				onFormSubmit={handleFormSubmit}
+			/>
+			<h2>Numbers</h2>
+			<Persons
+				onDeletePerson={handleDeletePerson}
+				persons={personsToShow}
+			/>
+		</div>
+	);
+};
+
+export default App;
