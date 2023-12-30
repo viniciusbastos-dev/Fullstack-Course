@@ -25,6 +25,16 @@ let persons = [
 		name: "Mary Poppendieck",
 		number: "39-23-6423122",
 	},
+	{
+		id: 5,
+		name: "Mary Poppendieck",
+		number: "39-23-6423122",
+	},
+	{
+		id: 6,
+		name: "Mary Poppendieck",
+		number: "39-23-6423122",
+	},
 ];
 
 const generateUniqueID = (persons) => {
