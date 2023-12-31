@@ -14,21 +14,17 @@ const App = () => {
 	const [message, setMessage] = useState(null);
 
 	useEffect(() => {
-		personsService
-			.getAll()
-			.then((initialPersons) => setPersons(initialPersons));
+		personsService.getAll().then((initialPersons) => setPersons(initialPersons));
 	}, []);
 
+	const findPersonByName = (name) =>
+		persons.find((person) => person.name.toLowerCase() === name.toLowerCase());
+		
 	const handleNameChange = (event) => setNewName(event.target.value);
 
 	const handleNumberChange = (event) => setNewNumber(event.target.value);
 
 	const handleSearchInputChange = (event) => setSearch(event.target.value);
-
-	const findPersonByName = (name) =>
-		persons.find(
-			(person) => person.name.toLowerCase() === name.toLowerCase()
-		);
 
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
@@ -70,9 +66,7 @@ const App = () => {
 			.then((returnedPerson) => {
 				setPersons(
 					persons.map((person) =>
-						person.id !== returnedPerson.id
-							? person
-							: returnedPerson
+						person.id !== returnedPerson.id ? person : returnedPerson
 					)
 				);
 			})
@@ -84,9 +78,7 @@ const App = () => {
 				setTimeout(() => {
 					setMessage(null);
 				}, 5000);
-				setPersons(
-					persons.filter((person) => person.id !== updatedPerson.id)
-				);
+				setPersons(persons.filter((person) => person.id !== updatedPerson.id));
 			});
 	};
 
@@ -94,9 +86,7 @@ const App = () => {
 		if (window.confirm(`Are you sure you want to delete ${name}?`)) {
 			personsService
 				.deleteP(id)
-				.then(() =>
-					setPersons(persons.filter((person) => person.id !== id))
-				)
+				.then(() => setPersons(persons.filter((person) => person.id !== id)))
 				.catch((error) => {
 					setMessage({
 						content: `Information of ${updatedPerson.name} has already been removed from server`,
@@ -111,19 +101,14 @@ const App = () => {
 	};
 
 	const personsToShow = search
-		? persons.filter((person) =>
-				person.name.toLowerCase().includes(search.toLowerCase())
-		  )
+		? persons.filter((person) => person.name.toLowerCase().includes(search.toLowerCase()))
 		: persons;
 
 	return (
 		<div>
 			<h2>Phonebook</h2>
 			<Notification message={message} />
-			<Filter
-				search={search}
-				onSearchInputChange={handleSearchInputChange}
-			/>
+			<Filter search={search} onSearchInputChange={handleSearchInputChange} />
 			<h2>Add a new</h2>
 			<PersonForm
 				name={newName}
@@ -133,10 +118,7 @@ const App = () => {
 				onFormSubmit={handleFormSubmit}
 			/>
 			<h2>Numbers</h2>
-			<Persons
-				onDeletePerson={handleDeletePerson}
-				persons={personsToShow}
-			/>
+			<Persons onDeletePerson={handleDeletePerson} persons={personsToShow} />
 		</div>
 	);
 };
