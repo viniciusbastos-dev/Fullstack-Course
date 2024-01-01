@@ -43,12 +43,13 @@ const generateUniqueID = (persons) => {
 
 	const checkID = (id) => persons.some((person) => person.id === id);
 
-	let novoId;
-	do {
-		novoId = randomID();
-	} while (checkID(novoId));
+	let newId;
 
-	return novoId;
+	do {
+		newId = randomID();
+	} while (checkID(newId));
+
+	return newId;
 };
 
 morgan.token("body", (req) => {
@@ -60,7 +61,7 @@ morgan.token("body", (req) => {
 app.use(cors());
 app.use(express.json());
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :body"));
-app.use(express.static("dist"))
+app.use(express.static("dist"));
 
 app.get("/api/persons", (req, res) => {
 	res.json(persons);
@@ -103,9 +104,9 @@ app.post("/api/persons", (req, res) => {
 	}
 
 	const person = {
+		id: generateUniqueID(persons),
 		name: body.name,
 		number: body.number,
-		id: generateUniqueID(persons),
 	};
 
 	persons = persons.concat(person);
