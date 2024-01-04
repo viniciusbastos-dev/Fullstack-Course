@@ -42,6 +42,16 @@ The course covers the following main topics:
 
 -   **Validation and ESLint:** Implementing validation techniques and utilizing ESLint for maintaining code quality and consistency.
 
+### Part 4: Testing Express Servers and User Administration
+
+-   **Backend Application Structure:** Understanding the architecture and organization of backend applications, including the importance of clean code and efficient structuring.
+-   **Introduction to Testing:** Exploring the fundamentals of testing in the context of backend applications, including various types of tests (unit, integration, end-to-end) and their significance.
+-   **Testing the Backend:** Implementing testing methodologies and frameworks (such as Jest, Mocha, or Supertest) to ensure the reliability and functionality of backend code.
+-   **User Administration:** Managing user data, authentication, authorization, and user-related functionalities within the backend system.
+-   **Token Authentication:** Implementing token-based authentication mechanisms to secure backend APIs and manage user sessions securely.
+
+This section focuses on reinforcing backend development skills, emphasizing testing methodologies, and implementing user-related functionalities for a robust and secure backend application.
+
 ## Resources
 
 -   The course materials are available on the University of Helsinki's website: [Full Stack Course](https://fullstackopen.com/en/)
