@@ -1,0 +1,14 @@
+{
+  "name": "exercises-4.1-4.2---blog-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vinícius Bastos",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^7.6.5"
+  }
+}
