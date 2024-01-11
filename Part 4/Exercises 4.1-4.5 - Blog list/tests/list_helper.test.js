@@ -139,15 +139,59 @@ describe("favorite blog", () => {
         },
     ];
 
-    const object = {
-        title: "Functional Programming Concepts",
-        author: "Haskell Curry",
-        likes: 30,
-    };
-
     test("of a list that returns the right object", () => {
+        const object = {
+            title: "Functional Programming Concepts",
+            author: "Haskell Curry",
+            likes: 30,
+        };
+
         const result = listHelper.favoriteBlog(biggerListOfBlogs);
 
         expect(result).toEqual(object);
+    });
+});
+
+describe("most blogs", () => {
+    test("returns the author who has the largest amount of blogs", () => {
+        const blogs = [
+            {
+                author: "Vinicius",
+                title: "O futuro da Inteligência Artificial",
+            },
+            {
+                author: "Bard",
+                title: "Como aprender a programar",
+            },
+            {
+                author: "Vinicius",
+                title: "As melhores dicas para escrever código",
+            },
+            {
+                author: "Bard",
+                title: "Como criar um chatbot",
+            },
+            {
+                author: "Vinícius",
+                title: "O futuro da Inteligência Artificial",
+            },
+            {
+                author: "Vinicius",
+                title: "Como aprender a programar",
+            },
+            {
+                author: "Maria",
+                title: "As melhores dicas para escrever código",
+            },
+            {
+                author: "João",
+                title: "Como criar um chatbot",
+            },
+        ];
+
+        const result = listHelper.mostBlogs(blogs);
+    
+        expect(result.author).toEqual(expect.any(String));
+        expect(result.blogs).toEqual(3);
     });
 });
