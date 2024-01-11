@@ -157,42 +157,42 @@ describe("most blogs", () => {
         const blogs = [
             {
                 author: "Vinicius",
-                title: "O futuro da Inteligência Artificial",
+                title: "The Future of Artificial Intelligence",
             },
             {
                 author: "Bard",
-                title: "Como aprender a programar",
+                title: "How to Learn Programming",
             },
             {
                 author: "Vinicius",
-                title: "As melhores dicas para escrever código",
+                title: "The Best Tips for Writing Code",
             },
             {
                 author: "Bard",
-                title: "Como criar um chatbot",
-            },
-            {
-                author: "Vinícius",
-                title: "O futuro da Inteligência Artificial",
+                title: "How to Create a Chatbot",
             },
             {
                 author: "Vinicius",
-                title: "Como aprender a programar",
+                title: "The Future of Artificial Intelligence",
+            },
+            {
+                author: "Vinicius",
+                title: "How to Learn Programming",
             },
             {
                 author: "Maria",
-                title: "As melhores dicas para escrever código",
+                title: "The Best Tips for Writing Code",
             },
             {
                 author: "João",
-                title: "Como criar um chatbot",
+                title: "How to Create a Chatbot",
             },
         ];
 
         const result = listHelper.mostBlogs(blogs);
 
         expect(result.author).toEqual(expect.any(String));
-        expect(result.blogs).toEqual(3);
+        expect(result.blogs).toEqual(4);
     });
 
     test("returns the author with the largest amount of likes", () => {
