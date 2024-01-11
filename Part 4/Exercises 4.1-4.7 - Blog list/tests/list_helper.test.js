@@ -190,8 +190,43 @@ describe("most blogs", () => {
         ];
 
         const result = listHelper.mostBlogs(blogs);
-    
+
         expect(result.author).toEqual(expect.any(String));
         expect(result.blogs).toEqual(3);
+    });
+
+    test("returns the author with the largest amount of likes", () => {
+        const blogs = [
+            {
+                author: "Edsger W. Dijkstra",
+                title: "Algorithmic Efficiency",
+                likes: 10,
+            },
+            {
+                author: "Grace Hopper",
+                title: "The History of Computing",
+                likes: 15,
+            },
+            {
+                author: "Edsger W. Dijkstra",
+                title: "Formal Languages",
+                likes: 7,
+            },
+            {
+                author: "Ada Lovelace",
+                title: "The First Computer Programmer",
+                likes: 20,
+            },
+            {
+                author: "Grace Hopper",
+                title: "Compiler Design",
+                likes: 8,
+            },
+        ];
+
+        const result = listHelper.mostLikes(blogs);
+
+        expect(result.author).toEqual(expect.any(String));
+        expect(result.likes).toEqual(23);
     });
 });
