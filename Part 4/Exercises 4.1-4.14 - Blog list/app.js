@@ -1,3 +1,4 @@
+require("express-async-errors");
 const blogsRouter = require("./controller/blogs");
 const middleware = require("./utils/middleware");
 const config = require("./utils/config");
@@ -7,7 +8,6 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
-require("express-async-errors");
 
 mongoose.set("strictQuery", false);
 
