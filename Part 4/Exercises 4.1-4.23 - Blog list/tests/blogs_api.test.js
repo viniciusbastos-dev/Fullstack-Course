@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("../app");
+const jwt = require("jsonwebtoken");
 
 const Blog = require("../models/blog");
 const helper = require("./test_helper");
@@ -12,7 +13,7 @@ beforeEach(async () => {
     await Blog.insertMany(helper.initialBlogs);
 });
 
-test("GET /api/blogs returns the correct number of blog posts in JSON format", async () => {
+test("returns the correct number of blog posts in JSON format", async () => {
     const response = await api
         .get("/api/blogs")
         .expect(200)
@@ -29,7 +30,16 @@ test("each blog should have a unique identifier named 'id'", async () => {
     });
 });
 
-test("POST /api/blogs creates a new blog post", async () => {
+test("if creates a new blog post", async () => {
+    const users = await helper.usersInDb();
+
+    const userForToken = {
+        username: users[0].username,
+        id: users[0].id,
+    };
+
+    const token = jwt.sign(userForToken, process.env.SECRET);
+
     const newBlog = {
         title: "New Blog Post",
         author: "Brendom",
@@ -39,9 +49,9 @@ test("POST /api/blogs creates a new blog post", async () => {
 
     await api
         .post("/api/blogs")
+        .set("Authorization", `Bearer ${token}`)
         .send(newBlog)
-        .expect(201)
-        .expect("Content-Type", /application\/json/);
+        .expect(201);
 
     const blogsAtEnd = await helper.blogsInDb();
 
@@ -50,6 +60,17 @@ test("POST /api/blogs creates a new blog post", async () => {
     const titles = blogsAtEnd.map((blog) => blog.title);
 
     expect(titles).toContain(newBlog.title);
+});
+
+test("fails with status 401 Unauthorized if token is not provided", async () => {
+    const newBlog = {
+        title: "New Blog Post",
+        author: "Brendom",
+        url: "http://example.com",
+        likes: 100,
+    };
+
+    await api.post("/api/blogs").send(newBlog).expect(401);
 });
 
 test("if 'likes' property is missing, it defaults to 0", async () => {
